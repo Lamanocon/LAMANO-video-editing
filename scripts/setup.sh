@@ -88,11 +88,22 @@ else
 fi
 
 # ------------------------------------------------------------------ yt-dlp
-step "yt-dlp (optional — only for pulling sources from URLs)"
+# Not strictly required, but in a remote container it's often the only way to
+# get footage in at all, so install it rather than deferring. Never fatal.
+step "yt-dlp (for pulling sources from URLs)"
 if command -v yt-dlp >/dev/null; then
   ok "$(yt-dlp --version 2>/dev/null)"
+elif [ "$CHECK_ONLY" = 1 ]; then
+  warn "not installed — run ./scripts/setup.sh"
 else
-  warn "not installed — install lazily if you need to pull from a URL"
+  echo "  installing..."
+  pip3 install --quiet --break-system-packages yt-dlp >/dev/null 2>&1 \
+    || pip3 install --quiet yt-dlp >/dev/null 2>&1
+  if command -v yt-dlp >/dev/null; then
+    ok "$(yt-dlp --version 2>/dev/null)"
+  else
+    warn "install failed — only needed for URL sources, continuing"
+  fi
 fi
 
 # ----------------------------------------------------------- elevenlabs key

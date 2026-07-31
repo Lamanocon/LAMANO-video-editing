@@ -49,8 +49,23 @@ genuinely needs eyes on it. That's what keeps it affordable on long footage.
 Check your setup at any time:
 
 ```bash
-./scripts/setup.sh --check
+./scripts/setup.sh --check    # what's installed
+./scripts/smoke-test.sh       # prove the render pipeline actually works
 ```
+
+`smoke-test.sh` generates a synthetic clip and runs it through analysis and an
+ffmpeg render — the same path a real edit takes. It costs nothing and needs no
+API key, so it separates "my toolchain is broken" from "my key is wrong."
+
+## Getting footage in
+
+On your own machine, copy files into `footage/<project>/`.
+
+In a remote session the container starts empty and media isn't in git, so
+either paste a URL and let the agent pull it with `yt-dlp` (installed by
+setup), or attach the file to the session. For a first test, a short clip with
+clear speech works best — filler-word removal is easier to judge when you can
+hear what it cut.
 
 ## Layout
 
