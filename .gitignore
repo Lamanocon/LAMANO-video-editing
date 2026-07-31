@@ -1,0 +1,52 @@
+# Secrets — never commit the ElevenLabs key
+.env
+.env.local
+*.pem
+*.key
+
+# Raw footage and renders: large binaries, keep them out of git.
+# Drop sources in footage/ and let the skill write to footage/edit/.
+footage/**
+!footage/README.md
+!footage/.gitkeep
+
+# Edit artifacts, wherever they land
+edit/
+transcripts/
+animations/
+clips_graded/
+clips_preview/
+downloads/
+verify/
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.m4a
+*.srt
+edl.json
+project.md
+takes_packed.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Node (animation engines install on demand)
+node_modules/
+package-lock.json
+
+# Manim / render scratch
+media/
+*.log
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

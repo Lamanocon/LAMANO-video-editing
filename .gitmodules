@@ -1,0 +1,4 @@
+[submodule ".claude/skills/video-use"]
+	path = .claude/skills/video-use
+	url = https://github.com/browser-use/video-use.git
+	branch = main
