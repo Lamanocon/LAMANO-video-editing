@@ -97,7 +97,12 @@ elif [ "$CHECK_ONLY" = 1 ]; then
   warn "not installed — run ./scripts/setup.sh"
 else
   echo "  installing..."
-  pip3 install --quiet --break-system-packages yt-dlp >/dev/null 2>&1 \
+  # brew keeps it on PATH cleanly on macOS; pip is the fallback elsewhere.
+  if command -v brew >/dev/null; then
+    brew install yt-dlp >/dev/null 2>&1
+  fi
+  command -v yt-dlp >/dev/null \
+    || pip3 install --quiet --break-system-packages yt-dlp >/dev/null 2>&1 \
     || pip3 install --quiet yt-dlp >/dev/null 2>&1
   if command -v yt-dlp >/dev/null; then
     ok "$(yt-dlp --version 2>/dev/null)"
