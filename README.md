@@ -57,6 +57,23 @@ Check your setup at any time:
 ffmpeg render — the same path a real edit takes. It costs nothing and needs no
 API key, so it separates "my toolchain is broken" from "my key is wrong."
 
+## Network access (remote sessions)
+
+Transcription calls `api.elevenlabs.io`. Remote sessions run behind an egress
+proxy, and if that host isn't on the environment's allowlist the call fails at
+the network layer — `curl: (56) CONNECT tunnel failed, response 403` — which
+looks like a bad API key but isn't.
+
+Confirm which it is:
+
+```bash
+curl -sS "$HTTPS_PROXY/__agentproxy/status"   # recentRelayFailures names the blocked host
+```
+
+Fix it by allowing `api.elevenlabs.io` in the environment's network policy
+(see the [Claude Code on the web docs](https://code.claude.com/docs/en/claude-code-on-the-web)).
+Running locally has no such restriction.
+
 ## Getting footage in
 
 On your own machine, copy files into `footage/<project>/`.
